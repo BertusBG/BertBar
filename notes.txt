@@ -1,0 +1,10 @@
+A view that concatenates the ingredients into a recipe would be nice.
+
+Script/view to list cocktails that would be enabled by missing ingredients
+
+Add columns:
+    Cocktails:
+        Own creation (bool)
+        Link
+
+Added Raspberry liqueur twice - remove one, and add check when adding ingredients
