@@ -10,7 +10,7 @@ def Main(db):
     # Read the list of cocktails from the DB
     dbCocktailNames = db.ReadCocktailNames()
     #print(dbCocktailNames)
-    
+
     # Make sure all the DB cocktails are in the CSV
     #ConfirmDbCocktailsInCsv(dbCocktailNames, abbrevRecipes)
 
@@ -37,7 +37,7 @@ def Main(db):
 
         ingrString = ", ".join(ingredients)
         print(f'{n}. {cocktailName} [{abbrevIngrString}]: {ingrString} ({idString})')
-        
+
 
 ################################################################################
 
@@ -49,7 +49,7 @@ def ReadCsv(csvName, skipHeader = True):
         if skipHeader:
             # Skip the header row (if it exists)
             header = next(csvreader, None)
-        
+
         # Iterate through each row in the CSV file
         for row in csvreader:
             data.append(row)
@@ -87,7 +87,7 @@ def GetExpandedIngredients(glossary, abbrevIngrString):
 
 if __name__ == '__main__':
     os.system('cls')
+    # TODO Input password
     db = CocktailDbHandler.CocktailDbHandler()
     Main(db)
     db.Disconnect()
-    

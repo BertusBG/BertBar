@@ -38,7 +38,7 @@ def Main():
             if iIng >= 0:
                 fOut.write(f',{dbIngredients[iIng][0]}')
             fOut.write('\n')
-    
+
     with open('allIngredients.csv', 'w') as fOut:
         fOut.write('\n'.join([name for (name, av) in dbIngredients]))
 
@@ -95,7 +95,7 @@ def AssociateIngredsAndAbbrevs(ingredients, abbrevs):
                 iIngr = possibleIngredients[0]
                 ingredIdxForAbbrevs[iAbbr] = iIngr
                 abbrevIdxForIngreds[iIngr] = iAbbr
-    
+
     # Second pass: associate unique abbreviations with ingredients
     if True:
         for iIngr in range(len(ingrNames)):
@@ -103,13 +103,13 @@ def AssociateIngredsAndAbbrevs(ingredients, abbrevs):
                 continue
             ingr = ingrNames[iIngr]
             # List all the abbreviations for which this ingredient is a match
-            possibleAbbrevs = [iAbbr for iAbbr in range(len(abbrevs)) 
+            possibleAbbrevs = [iAbbr for iAbbr in range(len(abbrevs))
                                if ingredIdxForAbbrevs[iAbbr] < 0 and IsValidAbbreviation(ingr,abbrevs[iAbbr])]
             if len(possibleAbbrevs) == 1:
                 iAbbr = possibleAbbrevs[0]
                 ingredIdxForAbbrevs[iAbbr] = iIngr
                 abbrevIdxForIngreds[iIngr] = iAbbr
-    
+
     return (abbrevIdxForIngreds, ingredIdxForAbbrevs)
 
 ################################################################################
