@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    # TODO Input password
     db = CocktailDbHandler.CocktailDbHandler()
 
     print('Huh?')

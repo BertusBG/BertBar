@@ -2,7 +2,8 @@ import csv
 import os
 import CocktailDbHandler
 
-db = CocktailDbHandler.CocktailDbHandler(debug=True)
+# TODO Input password
+db = CocktailDbHandler.CocktailDbHandler("", debug=True)
 
 # Add Espresso - Done
 #db.AddIngredients([('Espresso','True')])

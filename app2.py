@@ -10,7 +10,7 @@ db_params = {
     'port': '50013',
     'database': 'bcek7024xjmbfdmkdatx',
     'user': 'uesgqlgplgrroioppty0',
-    'password': 'nH37JyLzlbZvN2vigYYBDwEBAOYCOe'
+    'password': 'MyPassword'
 }
 
 def get_db_connection():

@@ -1,10 +1,11 @@
 import psycopg2
+import encodePassword
 
 class CocktailDbHandler:
 
-    def __init__(self, debug = False):
-        self._debug = debug;
-        self.Connect()
+    def __init__(self, userPassword = '', debug = False):
+        self._debug = debug
+        self.Connect(userPassword)
 
     ################################################################################
 
@@ -20,20 +21,17 @@ class CocktailDbHandler:
 
     ################################################################################
 
-    def Connect(self):
-        dbname = 'bcek7024xjmbfdmkdatx' #'bfrwwd1kwchakwsikyhy'
-        user = 'uesgqlgplgrroioppty0'
-        password = 'nH37JyLzlbZvN2vigYYBDwEBAOYCOe'
-        #host = 'bfrwwd1kwchakwsikyhy-postgresql.services.clever-cloud.com'
-        host = 'bcek7024xjmbfdmkdatx-postgresql.services.clever-cloud.com'
-        port = '50013' # '5432'
+    def Connect(self, userPassword):
+
+        storedKey = '008a6e66942e354ef5c0537a6e50409def3bf050977b2f8b5a48d9ede5775576'
+        dbPassword = encodePassword.GetDatabasePassword(storedKey, userPassword)
 
         self.connection = psycopg2.connect(
-            dbname=dbname,
-            user=user,
-            password=password,
-            host=host,
-            port=port
+            dbname = 'bcek7024xjmbfdmkdatx',
+            user = 'uesgqlgplgrroioppty0',
+            password = dbPassword,
+            host = 'bcek7024xjmbfdmkdatx-postgresql.services.clever-cloud.com',
+            port = '50013'
         )
 
         # Create a cursor object to interact with the database
@@ -124,7 +122,7 @@ class CocktailDbHandler:
     def AddCocktail(self, cocktailName, ingredientList):
         # Get the cocktail ID
         cocktailId = self.__getId('cocktails', cocktailName)
-    
+
         # If the cocktail doesn't exist
         if cocktailId < 0: # TODO
             # Insert the cocktail and get its ID
