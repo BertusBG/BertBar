@@ -8,3 +8,12 @@ Add columns:
         Link
 
 Added Raspberry liqueur twice - remove one, and add check when adding ingredients
+
+Flask:
+    Running in VS code: https://code.visualstudio.com/docs/python/tutorial-flask
+        Command Palette -> Create Environment
+        Create new terminal (Ctrl+Shift+`)
+        Connect to VPN for pip
+        python -m pip install flask (on VPN)
+        pip install psycopg2
+        python -m flask run

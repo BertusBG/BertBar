@@ -1,11 +1,7 @@
-import os
 import sys
 import CocktailDbHandler
 
-os.system('cls')
-
-userPassword = input("Enter user password: ")
-db = CocktailDbHandler.CocktailDbHandler(userPassword)
+db = CocktailDbHandler.CocktailDbHandler()
 
 # Print all ingredients in DB
 ingredients = db.ReadIngredients()

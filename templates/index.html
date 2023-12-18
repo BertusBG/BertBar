@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredient Table</title>
+</head>
+<body>
+    <h1>Ingredient Availability</h1>
+    <form method="post" action="/">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Connect</button>
+    </form>
+    <br>
+    {% if ingredients %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ingredient, available in ingredients %}
+                    <tr>
+                        <td>{{ ingredient }}</td>
+                        <td>{{ "Yes" if available else "No" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>

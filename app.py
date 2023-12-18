@@ -1,24 +1,13 @@
-from flask import Flask
-import CocktailDbHandler
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/")
+"""@app.route("/")
 def home():
-    # TODO Input password
-    db = CocktailDbHandler.CocktailDbHandler()
+    import outputIngredients
+    return outputIngredients.home()"""
 
-    print('Huh?')
-
-    output = ""
-
-    ingredients = db.ReadIngredients()
-    output += '---------------<br>\n'
-    output += 'INGREDIENTS: %d<br>\n' % len(ingredients)
-    output += '---------------<br>\n'
-    for (ingr,avail) in ingredients:
-        output += '%-20s | %s<br>\n' % ( ingr, avail )
-
-    db.Disconnect()
-
-    return output
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    import flaskPasswordDemo
+    return flaskPasswordDemo.index()

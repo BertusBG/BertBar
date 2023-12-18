@@ -87,7 +87,6 @@ def GetExpandedIngredients(glossary, abbrevIngrString):
 
 if __name__ == '__main__':
     os.system('cls')
-    # TODO Input password
     db = CocktailDbHandler.CocktailDbHandler()
     Main(db)
     db.Disconnect()

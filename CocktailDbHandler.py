@@ -5,6 +5,10 @@ class CocktailDbHandler:
 
     def __init__(self, userPassword = '', debug = False):
         self._debug = debug
+
+        if not userPassword:
+            userPassword = input("Enter user password: ")
+
         self.Connect(userPassword)
 
     ################################################################################
@@ -23,7 +27,7 @@ class CocktailDbHandler:
 
     def Connect(self, userPassword):
 
-        storedKey = '008a6e66942e354ef5c0537a6e50409def3bf050977b2f8b5a48d9ede5775576'
+        storedKey = '5ca7643e8d663d72a1c1607c4a1644cdfa28dc71d30c6ac91b0780aeaa125576'
         dbPassword = encodePassword.GetDatabasePassword(storedKey, userPassword)
 
         self.connection = psycopg2.connect(
