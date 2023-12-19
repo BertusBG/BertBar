@@ -1,0 +1,9 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: HelloWorld
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/your-project-id/HelloWorld:$COMMIT_SHA

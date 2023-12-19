@@ -1,0 +1,17 @@
+steps:
+  - name: 'python:3.8'
+    id: 'pip'
+    entrypoint: 'pip'
+    args: ['install', '-r', 'requirements.txt']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        docker build -t gcr.io/$PROJECT_ID/HelloWorld:$COMMIT_SHA .
+        docker push gcr.io/$PROJECT_ID/HelloWorld:$COMMIT_SHA
+
+images:
+  - 'gcr.io/$PROJECT_ID/HelloWorld:$COMMIT_SHA'

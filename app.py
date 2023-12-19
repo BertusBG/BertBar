@@ -1,16 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if False:
-        import flaskPasswordDemo
-        return flaskPasswordDemo.index()
-    if False:
-        import outputIngredients
-        return outputIngredients.home()
-    if True:
-        import flaskHelloWorld
-        return flaskHelloWorld.home()
-    return "Nothing to see here"
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    # TODO Import OS if I want to run it like this
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
