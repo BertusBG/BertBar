@@ -11,7 +11,8 @@ Added Raspberry liqueur twice - remove one, and add check when adding ingredient
 
 Flask:
     Running in VS code: https://code.visualstudio.com/docs/python/tutorial-flask
-        Command Palette -> Create Environment
+        Command Palette -> Create Environment (Ctrl+Alt+E)
+        Wait for it to finish
         Create new terminal (Ctrl+Shift+`)
         Connect to VPN for pip
         python -m pip install flask (on VPN)
