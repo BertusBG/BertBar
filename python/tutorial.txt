@@ -1,0 +1,3 @@
+gcloud services enable \
+    run.googleapis.com \
+    --project=tutorial-408815
