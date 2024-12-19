@@ -1,57 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bertus's Cocktail Menu</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      margin: 20px;
-    }
-
-    h1 {
-      color: #333;
-    }
-
-    .cocktail {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 15px;
-      margin: 10px;
-      background-color: #fff;
-      display: inline-block;
-      width: 200px;
-    }
-
-    .cocktail img {
-      max-width: 100%;
-      border-radius: 5px;
-    }
-
-    .cocktail h3 {
-      color: #2c3e50;
-      margin-top: 5px;
-    }
-
-    .cocktail p {
-      color: #777;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail Reader</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
+    <h1>Cocktail Information</h1>
+    <p id="cocktail-name">Loading...</p>
 
-  <h1>Cocktail Menu</h1>
+    <script>
+        // Initialize Supabase client
+        const SUPABASE_URL = 'https://agjfltsqnqnyfcepgpmh.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFnamZsdHNxbnFueWZjZXBncG1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ2MzA4NDQsImV4cCI6MjA1MDIwNjg0NH0.52LC3seAiNCWGw7YxzK0LNMvR0LKQsMlN39aDVQ8Kb0';
 
-  <div class="cocktail">
-    <img src="Mojito.jpg" alt="Cocktail 1">
-    <h3>Mojito</h3>
-    <p>A refreshing classic with mint, lime, and rum.</p>
-  </div>
+        document.getElementById('cocktail-name').textContent = 'Creating client';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        document.getElementById('cocktail-name').textContent = 'Client created';
 
-  <!-- Repeat the .cocktail section for each cocktail (2-10) -->
+        // Fetch the cocktail with id 1
+        async function fetchCocktail() {
+            try {
+                document.getElementById('cocktail-name').textContent = 'Fetching data';
+                const { data, error } = await supabaseClient
+                    .from('cocktails') // Replace 'cocktails' with your table name
+                    .select('name')
+                    .eq('id', 1)
+                    .single();
+                document.getElementById('cocktail-name').textContent = 'Data fetched';
 
+                if (error) {
+                    console.error('Error fetching cocktail:', error);
+                    document.getElementById('cocktail-name').textContent = 'Error fetching data';
+                    return;
+                }
+
+                // Update the DOM with the cocktail name
+                dispStr = data ? "The #1 cocktail in Bertu's database is: " + data.name : 'No cocktail found';
+                document.getElementById('cocktail-name').textContent = dispStr;
+            } catch (err) {
+                console.error('Unexpected error:', err);
+                document.getElementById('cocktail-name').textContent = 'Unexpected error occurred';
+            }
+        }
+
+        // Call the function to fetch the cocktail
+        fetchCocktail();
+    </script>
 </body>
 </html>
