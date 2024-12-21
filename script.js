@@ -4,66 +4,89 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Function to fetch cocktails and their ingredients
-async function loadCocktails() {
-    // Query to get all cocktails
-    const { data: cocktails, error: cocktailsError } = await supabaseClient
-        .from('cocktails')
-        .select('id, name');
-    console.log('Fetched cocktails');
+/**
+ * Fetches all rows from a given table with optional filters.
+ * @param {string} tableName - The name of the table to query.
+ * @param {object} [filters] - Filters to apply to the query.
+ * @returns {Promise<Array>} - The fetched data or an empty array if an error occurs.
+ */
+async function fetchTableData(tableName, filters = {}) {
+    const query = supabaseClient.from(tableName).select();
+    Object.entries(filters).forEach(([key, value]) => {
+        query.eq(key, value);
+    });
 
-    if (cocktailsError) {
-        console.error('Error fetching cocktails:', cocktailsError);
-        alert('Error fetching cocktails');
-        return;
+    const { data, error } = await query;
+    if (error) {
+        console.error(`Error fetching data from ${tableName}:`, error);
+        return [];
+    }
+    return data;
+}
+
+/**
+ * Fetches all cocktails.
+ * @returns {Promise<Array>} - A list of cocktails.
+ */
+async function fetchCocktails() {
+    return fetchTableData('cocktails');
+}
+
+/**
+ * Fetches ingredient IDs for a given cocktail ID.
+ * @param {number} cocktailId - The ID of the cocktail.
+ * @returns {Promise<Array<number>>} - A list of ingredient IDs.
+ */
+async function fetchIngredientIdsForCocktail(cocktailId) {
+    const cocktailIngredients = await fetchTableData('cocktail_ingredients', { cocktail_id: cocktailId });
+    return cocktailIngredients.map(ci => ci.ingredient_id);
+}
+
+/**
+ * Fetches ingredient names for a list of ingredient IDs.
+ * @param {Array<number>} ingredientIds - The IDs of the ingredients.
+ * @returns {Promise<Array<string>>} - A list of ingredient names.
+ */
+async function fetchIngredientNames(ingredientIds) {
+    const { data, error } = await supabaseClient
+        .from('ingredients')
+        .select('name')
+        .in('id', ingredientIds);
+
+    if (error) {
+        console.error('Error fetching ingredients:', error);
+        return [];
     }
 
-    // For each cocktail, get its ingredients
-    const cocktailWithIngredients = await Promise.all(cocktails.map(async (cocktail) => {
-        // Get the ingredient IDs for the current cocktail
-        console.log('Fetching ingredients for cocktail', cocktail.id, cocktail.name)
-        const { data: cocktailIngredients, error: cocktailIngredientsError } = await supabaseClient
-            .from('cocktail_ingredients')
-            .select('ingredient_id')
-            .eq('cocktail_id', cocktail.id);
-        console.log('Number of ingredients fetched:', cocktailIngredients.length);
+    return data.map(ingredient => ingredient.name);
+}
 
-        if (cocktailIngredientsError) {
-            console.error('Error fetching cocktail ingredients:', cocktailIngredientsError);
-            return { ...cocktail, ingredients: [] };
-        }
+/**
+ * Fetches all cocktails along with their ingredients.
+ * @returns {Promise<Array<object>>} - A list of cocktails with their ingredients.
+ */
+async function fetchCocktailsWithIngredients() {
+    const cocktails = await fetchCocktails();
 
-        if (cocktailIngredients.length === 0) {
-            console.log(`No ingredients found for cocktail_id: ${cocktail.id}`);
-        }
+    const cocktailsWithIngredients = await Promise.all(
+        cocktails.map(async (cocktail) => {
+            const ingredientIds = await fetchIngredientIdsForCocktail(cocktail.id);
+            const ingredients = await fetchIngredientNames(ingredientIds);
+            return { ...cocktail, ingredients };
+        })
+    );
 
-        // Get the names of the ingredients based on the ingredient IDs
-        const ingredientIds = cocktailIngredients.map(ci => ci.ingredient_id);
-        console.log('IngredientIds.length =', ingredientIds.length)
-        const { data: ingredients, error: ingredientsError } = await supabaseClient
-            .from('ingredients')
-            .select('name')
-            .in('id', ingredientIds);
-
-        if (ingredientsError) {
-            console.error('Error fetching ingredients:', ingredientsError);
-            return { ...cocktail, ingredients: [] };
-        }
-
-        // Return the cocktail with its ingredients
-        return { ...cocktail, ingredients: ingredients.map(ing => ing.name) };
-    }));
-
-    // Now render the data into the HTML
-    renderCocktails(cocktailWithIngredients);
+    return cocktailsWithIngredients;
 }
 
 // Function to render the cocktails and ingredients into the DOM
-function renderCocktails(cocktailWithIngredients) {
+async function renderCocktails() {
     const cocktailListContainer = document.getElementById('cocktailList');
     cocktailListContainer.innerHTML = ''; // Clear previous data if any
 
-    cocktailWithIngredients.forEach(cocktail => {
+    const cocktailsWithIngredients = await fetchCocktailsWithIngredients();
+
+    cocktailsWithIngredients.forEach(cocktail => {
         // Create a container for each cocktail
         const cocktailDiv = document.createElement('div');
         cocktailDiv.classList.add('cocktail');
@@ -94,4 +117,4 @@ function renderCocktails(cocktailWithIngredients) {
 }
 
 // Load cocktails when the page is loaded
-document.addEventListener('DOMContentLoaded', loadCocktails);
+document.addEventListener('DOMContentLoaded', renderCocktails);
