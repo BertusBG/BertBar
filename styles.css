@@ -1,0 +1,38 @@
+body {
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #442200, #884400);
+    color: #ecf0f1;
+}
+
+.container {
+    text-align: center;
+    background: #221100;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 2rem;
+    color: #e7BB22;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #ecf0f1;
+}
+
+.loading {
+    color: #bdc3c7;
+}
+
+.error {
+    color: #c0392b;
+}
