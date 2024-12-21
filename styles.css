@@ -6,33 +6,70 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom right, #442200, #884400);
+    background: linear-gradient(to bottom right, #442200, #221100);
     color: #ecf0f1;
 }
 
 .container {
     text-align: center;
-    background: #221100;
+    background: #100800;
     padding: 20px 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-h1 {
+.title {
     font-size: 2rem;
-    color: #e7BB22;
+    color: #e7BB22; /* Gold color for the title */
     margin-bottom: 20px;
 }
 
-p {
-    font-size: 1.2rem;
-    color: #ecf0f1;
+.cocktail-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.cocktail {
+    background-color: #331700; /* Dark brown background */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    width: 200px;
+    text-align: center;
+    color: #ecf0f1; /* Text color */
+}
+
+.cocktail h2 {
+    font-size: 1.2em;
+    color: #e7BB22; /* Gold color for cocktail names */
+    margin-bottom: 10px;
+}
+
+ul {
+    display: flex; /* Arrange ingredients side-by-side */
+    justify-content: center; /* Center the ingredients */
+    flex-wrap: wrap; /* Allow wrapping if ingredients exceed available width */
+    gap: 10px; /* Add spacing between ingredients */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background-color: #884400; /* Warm brown for ingredient tags */
+    color: #ecf0f1; /* White text */
+    font-size: 0.9em;
+    padding: 5px 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .loading {
-    color: #bdc3c7;
+    color: #bdc3c7; /* Light gray for loading text */
 }
 
 .error {
-    color: #c0392b;
+    color: #c0392b; /* Red for error messages */
 }
