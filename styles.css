@@ -6,70 +6,99 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom right, #100800, #100800);
+    background: linear-gradient(to bottom right, #100800, #400200);
     color: #ecf0f1;
 }
 
 .container {
     text-align: center;
-    background: #100800;
+    background: #221100;
     padding: 20px 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    max-width: 1200px;
 }
 
-.title {
+h1 {
     font-size: 2rem;
-    color: #e7BB22; /* Gold color for the title */
+    color: #e7BB22;
     margin-bottom: 20px;
 }
 
-.cocktail-list {
+.options {
+    margin-bottom: 20px;
+}
+
+.options button,
+.options input {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.options input {
+    width: 200px;
+}
+
+.options button:hover {
+    background: #e7bb22;
+    color: #221100;
+}
+
+#cocktailList {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    margin-top: 20px;
 }
 
 .cocktail {
-    background-color: #331700; /* Dark brown background */
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    width: 200px;
-    text-align: center;
-    color: #ecf0f1; /* Text color */
+    background: #331a00;
+    padding: 20px;
+    border-radius: 10px;
+    width: calc(33% - 20px); /* Adjust for 3 columns with spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    min-width: 250px; /* Ensure a minimum size for small screens */
 }
 
 .cocktail h2 {
-    font-size: 1.2em;
-    color: #e7BB22; /* Gold color for cocktail names */
     margin-bottom: 10px;
+    color: #e7bb22;
 }
 
-ul {
-    display: flex; /* Arrange ingredients side-by-side */
-    justify-content: center; /* Center the ingredients */
-    flex-wrap: wrap; /* Allow wrapping if ingredients exceed available width */
-    gap: 10px; /* Add spacing between ingredients */
-    list-style-type: none;
+.cocktail ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
-li {
-    background-color: #884400; /* Warm brown for ingredient tags */
-    color: #ecf0f1; /* White text */
-    font-size: 0.9em;
+.cocktail ul li {
+    background: #442200;
+    color: #ecf0f1;
     padding: 5px 10px;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    flex: 0 0 auto; /* Prevent items from shrinking */
+}
+
+.ingredient-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
 }
 
 .loading {
-    color: #bdc3c7; /* Light gray for loading text */
+    color: #bdc3c7;
 }
 
 .error {
-    color: #c0392b; /* Red for error messages */
+    color: #c0392b;
 }
