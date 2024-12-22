@@ -30,22 +30,20 @@ h1 {
     margin-bottom: 20px;
 }
 
-.options button,
-.options input {
-    margin: 5px;
+.options a.button {
+    display: inline-block;
+    text-decoration: none;
+    color: #ecf0f1;
+    background-color: #442200;
     padding: 10px 15px;
-    font-size: 1rem;
-    border: none;
+    margin: 5px;
     border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
 }
 
-.options input {
-    width: 200px;
-}
-
-.options button:hover {
-    background: #e7bb22;
+.options a.button:hover {
+    background-color: #e7bb22;
     color: #221100;
 }
 

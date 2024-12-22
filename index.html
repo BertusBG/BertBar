@@ -3,27 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocktail Search</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <title>Cocktail Explorer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1 class="title">Cocktail Explorer</h1>
-
-        <!-- Options Section -->
+        <p>Select an option below:</p>
         <div class="options">
-            <button id="showAllBtn">Show All Cocktails</button>
-            <button id="showAvailableBtn">Cocktails with Available Ingredients</button>
-            <input type="text" id="customSearch" placeholder="Search for a cocktail..." />
-            <button id="customSearchBtn">Search</button>
-            <button id="showIngredientsBtn">Show All Ingredients</button>
+            <a href="all-cocktails.html" class="button">Show All Cocktails</a>
+            <a href="cocktails-available.html" class="button">Cocktails I Can Make</a>
+            <a href="ingredients.html" class="button">Show All Ingredients</a>
+            <a href="custom-search.html" class="button">Custom Search</a>
         </div>
-
-        <!-- Cocktails/Ingredients Display Section -->
-        <div id="cocktailList"></div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
