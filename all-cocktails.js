@@ -1,6 +1,9 @@
 import { fetchCocktailsWithIngredients } from './common.js';
 
 async function showAllCocktails() {
+    const cocktailListContainer = document.getElementById('cocktailList');
+    cocktailListContainer.innerHTML = 'Loading cocktails...';
+
     const cocktailsWithIngredients = await fetchCocktailsWithIngredients();
 
     // Sort cocktails by name

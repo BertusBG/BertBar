@@ -91,6 +91,9 @@ function renderIngredientList(list, containerId) {
 
 // Filter cocktails based on the selected ingredients
 async function filterCocktails() {
+    const cocktailListContainer = document.getElementById('cocktailList');
+    cocktailListContainer.innerHTML = 'Loading cocktails...';
+
     const cocktailsWithIngredients = await fetchCocktailsWithIngredients();
 
     const filteredCocktails = cocktailsWithIngredients.filter(cocktail => {

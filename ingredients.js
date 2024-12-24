@@ -3,9 +3,11 @@ import { fetchIngredients } from './common.js';
 
 // Render Ingredients Function
 export async function renderIngredients() {
+    const ingredientListContainer = document.getElementById('ingredientList');
+    ingredientListContainer.innerHTML = 'Loading ingredients...';
+
     const ingredients = await fetchIngredients();  // Get all ingredients from the database
     ingredients.sort((a, b) => a.name.localeCompare(b.name));
-    const ingredientListContainer = document.getElementById('ingredientList');
     ingredientListContainer.innerHTML = '';  // Clear any previous content
 
     const ingredientsDiv = document.createElement('div');

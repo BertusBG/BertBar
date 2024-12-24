@@ -1,6 +1,9 @@
 import { fetchCocktailsWithIngredients, fetchIngredients } from './common.js';
 
 async function renderCocktailsWithAvailableIngredients() {
+    const cocktailListContainer = document.getElementById('cocktailList');
+    cocktailListContainer.innerHTML = 'Loading cocktails...';
+
     const availableIngredients = await fetchIngredients();
     const availableIngredientIds = availableIngredients
         .filter(ingredient => ingredient.available)
@@ -13,7 +16,6 @@ async function renderCocktailsWithAvailableIngredients() {
         )
     );
 
-    const cocktailListContainer = document.getElementById('cocktailList');
     cocktailListContainer.innerHTML = '';
 
     cocktailsThatCanBeMade.forEach(cocktail => {
