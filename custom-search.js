@@ -9,6 +9,9 @@ let selectedOptional = [];
 async function populateDropdowns() {
     allIngredients = await fetchIngredients();
 
+    // Sort ingredients by name
+    allIngredients.sort((a, b) => a.name.localeCompare(b.name));
+
     const includeDropdown = document.getElementById('includeDropdown');
     const excludeDropdown = document.getElementById('excludeDropdown');
     const optionalDropdown = document.getElementById('optionalDropdown');
@@ -109,6 +112,9 @@ async function filterCocktails() {
 
         return excludesMatch && includesMatch && optionalMatch;
     });
+
+    // Sort cocktails by name
+    filteredCocktails.sort((a, b) => a.name.localeCompare(b.name));
 
     renderCocktails(filteredCocktails);
 }
