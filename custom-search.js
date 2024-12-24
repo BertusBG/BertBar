@@ -13,26 +13,35 @@ async function populateDropdowns() {
     const excludeDropdown = document.getElementById('excludeDropdown');
     const optionalDropdown = document.getElementById('optionalDropdown');
 
-    // Populate the "include" and "optional" dropdowns with all ingredients
+    // Clear all dropdowns
+    includeDropdown.innerHTML = '<option value="">Select an ingredient</option>';
+    excludeDropdown.innerHTML = '<option value="">Select an ingredient</option>';
+    optionalDropdown.innerHTML = '<option value="">Select an ingredient</option>';
+
+    // Populate the "include" dropdown with all ingredients
     allIngredients.forEach(ingredient => {
         const includeOption = document.createElement('option');
         includeOption.value = ingredient.id;
         includeOption.textContent = ingredient.name;
         includeDropdown.appendChild(includeOption);
-
-        const optionalOption = document.createElement('option');
-        optionalOption.value = ingredient.id;
-        optionalOption.textContent = ingredient.name;
-        optionalDropdown.appendChild(optionalOption);
     });
 
-    // Populate the "exclude" dropdown only with available ingredients
+    // Populate the "exclude" dropdown with available ingredients
     const availableIngredients = allIngredients.filter(ingredient => ingredient.available);
     availableIngredients.forEach(ingredient => {
         const excludeOption = document.createElement('option');
         excludeOption.value = ingredient.id;
         excludeOption.textContent = ingredient.name;
         excludeDropdown.appendChild(excludeOption);
+    });
+
+    // Populate the "optional" dropdown with unavailable ingredients
+    const unavailableIngredients = allIngredients.filter(ingredient => !ingredient.available);
+    unavailableIngredients.forEach(ingredient => {
+        const optionalOption = document.createElement('option');
+        optionalOption.value = ingredient.id;
+        optionalOption.textContent = ingredient.name;
+        optionalDropdown.appendChild(optionalOption);
     });
 }
 
