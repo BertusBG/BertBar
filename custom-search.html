@@ -8,12 +8,33 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title">Search Cocktails</h1>
-        <input type="text" id="customSearch" placeholder="Search for a cocktail..." />
-        <button id="customSearchBtn">Search</button>
-        <div id="cocktailList"></div>
+        <h1>Custom Cocktail Search</h1>
+        <div class="options">
+            <div class="filter-section">
+                <h2>Include Ingredients</h2>
+                <select id="includeDropdown">
+                    <option value="">Select an ingredient</option>
+                </select>
+                <div id="selectedInclude" class="ingredient-list"></div>
+            </div>
+            <div class="filter-section">
+                <h2>Exclude Ingredients</h2>
+                <select id="excludeDropdown">
+                    <option value="">Select an ingredient</option>
+                </select>
+                <div id="selectedExclude" class="ingredient-list"></div>
+            </div>
+            <div class="filter-section">
+                <h2>Optional Ingredients</h2>
+                <select id="optionalDropdown">
+                    <option value="">Select an ingredient</option>
+                </select>
+                <div id="selectedOptional" class="ingredient-list"></div>
+            </div>
+        </div>
+        <button id="filterBtn">Filter Cocktails</button>
+        <div id="cocktailList" class="cocktail-list"></div>
     </div>
-    <script type="module" src="./common.js"></script>
     <script type="module" src="custom-search.js"></script>
 </body>
 </html>
