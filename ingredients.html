@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingredients</title>
-    <script type="module" src="ingredients.js"></script>
+    <script type="module" src="./ingredients.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="all-cocktails.html">All Cocktails</a></li>
+            <li><a href="cocktails-i-can-make.html">Cocktails I Can Make</a></li>
+            <li><a href="custom-search.html">Custom Search</a></li>
+        </ul>
+    </nav>
+
+    <!-- Ingredients Container -->
     <div class="container">
-        <h1 class="title">Ingredients List</h1>
-
-        <!-- Ingredients List Section -->
+        <h1 class="title">Ingredients</h1>
         <div id="ingredientList"></div>
-
-        <div class="options">
-            <a href="index.html"><button>Back to Home</button></a>
-        </div>
     </div>
 </body>
 </html>

@@ -1,10 +1,48 @@
-/* General Styles */
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #221100;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid #e7bb22;
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar ul li {
+    display: inline;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #e7bb22;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.navbar ul li a:hover {
+    background-color: #e7bb22;
+    color: #221100;
+}
+
+/* Main Container */
 body {
     font-family: 'Georgia', serif;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(to bottom right, #100800, #040200);
@@ -19,55 +57,16 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     width: 80%;
     max-width: 1200px;
+    margin-top: 20px;
 }
 
-h1, h2 {
+h1 {
+    font-size: 2rem;
     color: #e7bb22;
     margin-bottom: 20px;
 }
 
-button {
-    padding: 10px 15px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background: #e7bb22;
-    color: #221100;
-    margin: 10px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-button:hover {
-    background: #ffcc33;
-    color: #000;
-}
-
-select {
-    margin: 10px;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #fff;
-    color: #000;
-}
-
-.dropdown label {
-    font-size: 1rem;
-    margin-right: 10px;
-}
-
-.dropdown, .button-group, .selected-ingredients {
-    margin-bottom: 20px;
-}
-
-.selected-ingredients h2 {
-    margin-top: 30px;
-}
-
-/* Cocktail Card Styles */
-#cocktailList {
+#ingredientList {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -75,83 +74,23 @@ select {
     margin-top: 20px;
 }
 
-.cocktail {
+.ingredient {
     background: #331a00;
     padding: 20px;
     border-radius: 10px;
-    width: calc(33% - 20px); /* Adjust for 3 columns with spacing */
+    width: calc(33% - 20px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     text-align: left;
     min-width: 250px;
 }
 
-.cocktail h2 {
+.ingredient h2 {
     margin-bottom: 10px;
     color: #e7bb22;
 }
 
-.cocktail ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.cocktail ul li {
-    background: #442200;
-    color: #ecf0f1;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-/* Ingredient Card Styles */
-.ingredient-grid {
+.ingredient-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.ingredient-card {
-    background: #331a00;
-    padding: 20px;
-    border-radius: 10px;
-    width: calc(33% - 20px); /* Adjust for 3 columns with spacing */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    text-align: left;
-    min-width: 250px;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-}
-
-.ingredient-card h3 {
-    margin: 0;
-    flex-grow: 1; /* Allow the name to take up available space */
-    color: #e7bb22;
-}
-
-.remove-btn {
-    background: #221100;
-    color: #e7bb22;
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none;
-    margin-left: 10px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.remove-btn:hover {
-    background: #442200;
-    color: #ffcc33;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .ingredient-card, .cocktail {
-        width: 100%; /* Full width on small screens */
-    }
+    margin: 5px 0;
 }
