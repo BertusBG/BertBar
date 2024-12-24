@@ -1,117 +1,115 @@
 import { fetchCocktailsWithIngredients, fetchIngredients } from './common.js';
 
-// Elements
-const includeDropdown = document.getElementById('includeDropdown');
-const excludeDropdown = document.getElementById('excludeDropdown');
-const optionalDropdown = document.getElementById('optionalDropdown');
-const selectedIncludeContainer = document.getElementById('selectedInclude');
-const selectedExcludeContainer = document.getElementById('selectedExclude');
-const selectedOptionalContainer = document.getElementById('selectedOptional');
-const cocktailList = document.getElementById('cocktailList');
+let allIngredients = [];
+let selectedInclude = [];
+let selectedExclude = [];
+let selectedOptional = [];
 
-// State
-let includeIngredients = [];
-let excludeIngredients = [];
-let optionalIngredients = [];
-
-// Utility Functions
-function createIngredientCard(ingredient, container, stateArray) {
-    const card = document.createElement('div');
-    card.classList.add('ingredient-card');
-
-    const name = document.createElement('h3');
-    name.textContent = ingredient.name;
-
-    const removeBtn = document.createElement('button');
-    removeBtn.textContent = '✖';
-    removeBtn.classList.add('remove-btn');
-    removeBtn.addEventListener('click', () => {
-        const index = stateArray.findIndex((item) => item.id === ingredient.id);
-        if (index !== -1) {
-            stateArray.splice(index, 1);
-        }
-        renderSelectedIngredients(); // Re-render
-    });
-
-    card.appendChild(name);
-    card.appendChild(removeBtn);
-    container.appendChild(card);
-}
-
-function renderSelectedIngredients() {
-    selectedIncludeContainer.innerHTML = '';
-    includeIngredients.forEach((ingredient) =>
-        createIngredientCard(ingredient, selectedIncludeContainer, includeIngredients)
-    );
-
-    selectedExcludeContainer.innerHTML = '';
-    excludeIngredients.forEach((ingredient) =>
-        createIngredientCard(ingredient, selectedExcludeContainer, excludeIngredients)
-    );
-
-    selectedOptionalContainer.innerHTML = '';
-    optionalIngredients.forEach((ingredient) =>
-        createIngredientCard(ingredient, selectedOptionalContainer, optionalIngredients)
-    );
-}
-
-// Dropdown Event Listeners
-function setupDropdown(dropdown, stateArray) {
-    dropdown.addEventListener('change', async (event) => {
-        const ingredientId = parseInt(event.target.value);
-        const ingredient = (await fetchIngredients()).find((ing) => ing.id === ingredientId);
-
-        if (ingredient && !stateArray.some((item) => item.id === ingredient.id)) {
-            stateArray.push(ingredient);
-        }
-
-        renderSelectedIngredients();
-        dropdown.value = ''; // Reset the dropdown
-    });
-}
-
-setupDropdown(includeDropdown, includeIngredients);
-setupDropdown(excludeDropdown, excludeIngredients);
-setupDropdown(optionalDropdown, optionalIngredients);
-
-// Fetch and Populate Dropdowns
+// Populate the dropdowns with ingredients
 async function populateDropdowns() {
-    const ingredients = await fetchIngredients();
+    allIngredients = await fetchIngredients();
 
-    [includeDropdown, excludeDropdown, optionalDropdown].forEach((dropdown) => {
-        dropdown.innerHTML = '<option value="">Select an ingredient</option>';
-        ingredients.forEach((ingredient) => {
-            const option = document.createElement('option');
-            option.value = ingredient.id;
-            option.textContent = ingredient.name;
-            dropdown.appendChild(option);
-        });
+    const includeDropdown = document.getElementById('includeDropdown');
+    const excludeDropdown = document.getElementById('excludeDropdown');
+    const optionalDropdown = document.getElementById('optionalDropdown');
+
+    // Populate the "include" and "optional" dropdowns with all ingredients
+    allIngredients.forEach(ingredient => {
+        const includeOption = document.createElement('option');
+        includeOption.value = ingredient.id;
+        includeOption.textContent = ingredient.name;
+        includeDropdown.appendChild(includeOption);
+
+        const optionalOption = document.createElement('option');
+        optionalOption.value = ingredient.id;
+        optionalOption.textContent = ingredient.name;
+        optionalDropdown.appendChild(optionalOption);
+    });
+
+    // Populate the "exclude" dropdown only with available ingredients
+    const availableIngredients = allIngredients.filter(ingredient => ingredient.available);
+    availableIngredients.forEach(ingredient => {
+        const excludeOption = document.createElement('option');
+        excludeOption.value = ingredient.id;
+        excludeOption.textContent = ingredient.name;
+        excludeDropdown.appendChild(excludeOption);
     });
 }
 
-// Filter and Render Cocktails
+// Add selected ingredients to the appropriate list
+function addIngredient(ingredientId, list, containerId) {
+    const ingredient = allIngredients.find(ing => ing.id === parseInt(ingredientId));
+    if (!ingredient || list.some(ing => ing.id === ingredient.id)) return;
+
+    list.push(ingredient);
+    renderIngredientList(list, containerId);
+}
+
+// Remove an ingredient from a list
+function removeIngredient(ingredientId, list, containerId) {
+    const index = list.findIndex(ing => ing.id === parseInt(ingredientId));
+    if (index !== -1) {
+        list.splice(index, 1);
+        renderIngredientList(list, containerId);
+    }
+}
+
+// Render the selected ingredients
+function renderIngredientList(list, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+
+    list.forEach(ingredient => {
+        const ingredientDiv = document.createElement('div');
+        ingredientDiv.classList.add('cocktail');
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = ingredient.name;
+        ingredientDiv.appendChild(nameSpan);
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = '✖';
+        removeButton.classList.add('remove-btn');
+        removeButton.addEventListener('click', () => removeIngredient(ingredient.id, list, containerId));
+        ingredientDiv.appendChild(removeButton);
+
+        container.appendChild(ingredientDiv);
+    });
+}
+
+// Filter cocktails based on the selected ingredients
 async function filterCocktails() {
-    const cocktails = await fetchCocktailsWithIngredients();
+    const cocktailsWithIngredients = await fetchCocktailsWithIngredients();
 
-    const filteredCocktails = cocktails.filter((cocktail) => {
-        const ingredientIds = cocktail.ingredients.map((ing) => ing.id);
+    const filteredCocktails = cocktailsWithIngredients.filter(cocktail => {
+        const ingredientIds = cocktail.ingredients.map(ing => ing.id);
 
-        const includesAll = includeIngredients.every((ing) => ingredientIds.includes(ing.id));
-        const excludesAll = excludeIngredients.every((ing) => !ingredientIds.includes(ing.id));
-        const includesAnyOptional =
-            optionalIngredients.length === 0 ||
-            optionalIngredients.some((ing) => ingredientIds.includes(ing.id));
+        // Check if all exclude ingredients are missing
+        const excludesMatch = selectedExclude.every(ing => !ingredientIds.includes(ing.id));
 
-        return includesAll && excludesAll && includesAnyOptional;
+        // Check if all include ingredients are present
+        const includesMatch = selectedInclude.every(ing => ingredientIds.includes(ing.id));
+
+        // Check if all ingredients are either available, in "include", or in "optional"
+        const optionalMatch = cocktail.ingredients.every(
+            ing =>
+                ing.available ||
+                selectedInclude.some(includeIng => includeIng.id === ing.id) ||
+                selectedOptional.some(optionalIng => optionalIng.id === ing.id)
+        );
+
+        return excludesMatch && includesMatch && optionalMatch;
     });
 
     renderCocktails(filteredCocktails);
 }
 
+// Render cocktails
 function renderCocktails(cocktails) {
-    cocktailList.innerHTML = '';
+    const cocktailListContainer = document.getElementById('cocktailList');
+    cocktailListContainer.innerHTML = '';
 
-    cocktails.forEach((cocktail) => {
+    cocktails.forEach(cocktail => {
         const cocktailDiv = document.createElement('div');
         cocktailDiv.classList.add('cocktail');
 
@@ -119,26 +117,35 @@ function renderCocktails(cocktails) {
         cocktailName.textContent = cocktail.name;
         cocktailDiv.appendChild(cocktailName);
 
-        if (cocktail.ingredients.length > 0) {
-            const ingredientsList = document.createElement('ul');
-            cocktail.ingredients.forEach((ingredient) => {
-                const ingredientItem = document.createElement('li');
-                ingredientItem.textContent = ingredient.name;
-                ingredientsList.appendChild(ingredientItem);
-            });
-            cocktailDiv.appendChild(ingredientsList);
-        } else {
-            const noIngredients = document.createElement('p');
-            noIngredients.textContent = 'No ingredients available';
-            cocktailDiv.appendChild(noIngredients);
-        }
+        const ingredientsList = document.createElement('ul');
+        cocktail.ingredients.forEach(ingredient => {
+            const ingredientItem = document.createElement('li');
+            ingredientItem.textContent = ingredient.name;
+            ingredientsList.appendChild(ingredientItem);
+        });
+        cocktailDiv.appendChild(ingredientsList);
 
-        cocktailList.appendChild(cocktailDiv);
+        cocktailListContainer.appendChild(cocktailDiv);
     });
 }
 
-// Event Listeners
+// Event listeners for dropdowns and filter button
+document.getElementById('includeDropdown').addEventListener('change', (e) => {
+    addIngredient(e.target.value, selectedInclude, 'selectedInclude');
+    e.target.value = '';
+});
+
+document.getElementById('excludeDropdown').addEventListener('change', (e) => {
+    addIngredient(e.target.value, selectedExclude, 'selectedExclude');
+    e.target.value = '';
+});
+
+document.getElementById('optionalDropdown').addEventListener('change', (e) => {
+    addIngredient(e.target.value, selectedOptional, 'selectedOptional');
+    e.target.value = '';
+});
+
 document.getElementById('filterBtn').addEventListener('click', filterCocktails);
 
-// Initialize
+// Initialize the dropdowns on page load
 populateDropdowns();
