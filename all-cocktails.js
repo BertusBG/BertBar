@@ -1,11 +1,19 @@
 import { fetchCocktailsWithIngredients } from './common.js';
 
-async function renderCocktails() {
+async function showAllCocktails() {
     const cocktailsWithIngredients = await fetchCocktailsWithIngredients();
+
+    // Sort cocktails by name
+    cocktailsWithIngredients.sort((a, b) => a.name.localeCompare(b.name));
+
+    renderCocktails(cocktailsWithIngredients);
+}
+
+function renderCocktails(cocktails) {
     const cocktailListContainer = document.getElementById('cocktailList');
     cocktailListContainer.innerHTML = '';
 
-    cocktailsWithIngredients.forEach(cocktail => {
+    cocktails.forEach(cocktail => {
         const cocktailDiv = document.createElement('div');
         cocktailDiv.classList.add('cocktail');
 
@@ -13,22 +21,17 @@ async function renderCocktails() {
         cocktailName.textContent = cocktail.name;
         cocktailDiv.appendChild(cocktailName);
 
-        if (cocktail.ingredients.length > 0) {
-            const ingredientsList = document.createElement('ul');
-            cocktail.ingredients.forEach(ingredient => {
-                const ingredientItem = document.createElement('li');
-                ingredientItem.textContent = ingredient.name;
-                ingredientsList.appendChild(ingredientItem);
-            });
-            cocktailDiv.appendChild(ingredientsList);
-        } else {
-            const noIngredients = document.createElement('p');
-            noIngredients.textContent = 'No ingredients available';
-            cocktailDiv.appendChild(noIngredients);
-        }
+        const ingredientsList = document.createElement('ul');
+        cocktail.ingredients.forEach(ingredient => {
+            const ingredientItem = document.createElement('li');
+            ingredientItem.textContent = ingredient.name;
+            ingredientsList.appendChild(ingredientItem);
+        });
+        cocktailDiv.appendChild(ingredientsList);
 
         cocktailListContainer.appendChild(cocktailDiv);
     });
 }
 
-document.addEventListener('DOMContentLoaded', renderCocktails);
+// Show all cocktails on page load
+showAllCocktails();

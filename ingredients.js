@@ -4,8 +4,9 @@ import { fetchIngredients } from './common.js';
 // Render Ingredients Function
 export async function renderIngredients() {
     const ingredients = await fetchIngredients();  // Get all ingredients from the database
-    const cocktailListContainer = document.getElementById('cocktailList');
-    cocktailListContainer.innerHTML = '';  // Clear any previous content
+    ingredients.sort((a, b) => a.name.localeCompare(b.name));
+    const ingredientListContainer = document.getElementById('ingredientList');
+    ingredientListContainer.innerHTML = '';  // Clear any previous content
 
     const ingredientsDiv = document.createElement('div');
     ingredientsDiv.classList.add('ingredients');  // Add a class for styling
@@ -26,7 +27,7 @@ export async function renderIngredients() {
         ingredientsDiv.appendChild(ingredientRow);  // Add the ingredient row to the container
     });
 
-    cocktailListContainer.appendChild(ingredientsDiv);  // Add the ingredients list to the page
+    ingredientListContainer.appendChild(ingredientsDiv);  // Add the ingredients list to the page
 }
 
 // Call the renderIngredients function when the page is loaded
