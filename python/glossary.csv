@@ -4,11 +4,16 @@ Ang,Angostura
 Ango,Angostura
 Ani,Aniseed Liqueur
 Apl,Apple Juice
-BTeq,Tequila Blanco
+Bail,Cream Liqueur
 Bdy,Brandy
+Beer,Beer
+Ben,Spiced Liqueur
+Bitt,Angostura
 BkbryLiq,Blackberry Liqueur
+BTeq,Tequila Blanco
 Chili,Chili
 Chm,Champagne
+Chry,Maraschino
 Cinn,
 Clove,
 Cmp,Campari
@@ -16,19 +21,20 @@ CocoCrm,Coconut Cream
 CofLiq,Coffee Liqueur
 Cola,Cola
 Cpr,Campari
+Crc,Triple Sec
 Crm,Cream
 Crn,Cranberry Juice
-Crc,Triple Sec
+DR,Dark Rum
 DRum,Dark Rum
 EggW,Egg White
 Eld,Elderflower Liqueur
 Esp,Espresso
-GM,Triple Sec
-GMTS,Triple Sec
 GgA,Ginger Ale
 GgB,Ginger Ale
 Gin,Gin
 Ginger,Ginger
+GM,Triple Sec
+GMTS,Triple Sec
 Gpf,Grapefruit Juice
 Grapes,Grapes
 Gren,Grenadine
@@ -39,6 +45,7 @@ Lmn,Lemon juice
 Mar,Maraschino
 Mngo,Mango Juice
 Mnt,Mint
+Mol,Molasses
 OCr�,Triple Sec
 Ora,Orange Juice
 Org,Orgeat
@@ -48,23 +55,26 @@ Peych,Peychaud's
 Pine,Pineapple Juice
 Pineap,Pineapple Juice
 Pna,Pineapple Juice
-RTeq,Tequila reposado
-RV,Red Vermouth
-RW,Red Wine
 RaspSyr,Raspberry Syrup
 RsbryLiq,Raspberry Liqueur
+RTeq,Tequila reposado
 Rum,White Rum
+RV,Red Vermouth
+RW,Red Wine
 Sal,Saline
 Sda,Soda water
-TS,Triple Sec
+SpicLiq,Spiced Liqueur
 Teq,Tequila Blanco
 Thyme,Thyme
 Ton,Tonic
+TS,Triple Sec
 VanVod,Vanilla Vodka
 Vod,Vodka
+Wh,Whisky
+Whblpt,Whisky
+WhIr,Whisky
+Whpeat,Whisky
+WR,White Rum
 WRum,White Rum
 WV,White Vermouth
-Wh,Whisky
-WhIr,Whisky
-Whblpt,Whisky
-Whpeat,Whisky
+Choc,Chocolate Liqueur
