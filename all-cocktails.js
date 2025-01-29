@@ -21,7 +21,13 @@ function renderCocktails(cocktails) {
         cocktailDiv.classList.add('cocktail');
 
         const cocktailName = document.createElement('h2');
-        cocktailName.textContent = cocktail.name;
+        const cocktailLink = document.createElement('a');
+        cocktailLink.href = `https://www.google.com/search?q=difford's+iba+${encodeURIComponent(cocktail.name)}`;
+        cocktailLink.textContent = cocktail.name;
+        cocktailLink.target = '_blank'; // Opens in a new tab
+        cocktailLink.rel = 'noopener noreferrer'; // Security best practice
+
+        cocktailName.appendChild(cocktailLink);
         cocktailDiv.appendChild(cocktailName);
 
         const ingredientsList = document.createElement('ul');

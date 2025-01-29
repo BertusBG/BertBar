@@ -65,6 +65,12 @@ h1, h2 {
     margin-bottom: 20px;
 }
 
+.cocktail h2 a {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Uses the parent h2 color */
+    cursor: pointer; /* Keeps the pointer cursor for UX */
+}
+
 button {
     padding: 10px 15px;
     font-size: 1rem;
