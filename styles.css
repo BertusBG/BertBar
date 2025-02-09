@@ -203,3 +203,40 @@ select {
         width: 100%; /* Full width on small screens */
     }
 }
+
+/* Centering the authentication buttons */
+#auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+#auth-container button {
+    margin: 10px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.ingredient-row {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.status {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.status:hover {
+    color: #0056b3;
+}
+
+.ingredient-row span {
+    margin-right: 10px;
+}

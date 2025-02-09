@@ -1,5 +1,5 @@
 // Import necessary functions from common.js
-import { fetchIngredients } from './common.js';
+import { fetchIngredients, supabaseClient } from './common.js';
 
 // Render Ingredients Function
 export async function renderIngredients() {
@@ -26,10 +26,36 @@ export async function renderIngredients() {
         availability.textContent = ingredient.available ? ' (Available)' : ' (Unavailable)';  // Show availability
         ingredientRow.appendChild(availability);
 
+        // Add a click event to toggle availability
+        ingredientRow.addEventListener('click', () => handleAvailabilityClick(ingredient));
+
         ingredientsDiv.appendChild(ingredientRow);  // Add the ingredient row to the container
     });
 
     ingredientListContainer.appendChild(ingredientsDiv);  // Add the ingredients list to the page
+}
+
+// Handle the click to toggle availability
+async function handleAvailabilityClick(ingredient) {
+    // Toggle the availability
+    const newAvailability = !ingredient.available;
+
+    // Update the ingredient in the database
+    const { data, error } = await supabaseClient
+        .from('ingredients')
+        .update({ available: newAvailability })  // Set the new availability
+        .eq('id', ingredient.id);  // Find the ingredient by its ID
+
+    if (error) {
+        console.error('Error updating ingredient availability:', error);
+        return;
+    }
+
+    // If successful, update the availability in the local ingredient object
+    ingredient.available = newAvailability;
+
+    // Re-render the ingredients to reflect the updated availability
+    renderIngredients();
 }
 
 // Call the renderIngredients function when the page is loaded

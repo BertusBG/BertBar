@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cocktail App</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script type="module" defer src="common.js"></script>
 </head>
 <body>
 
@@ -22,6 +24,13 @@
     <div class="container">
         <h1>Welcome to the Cocktail App</h1>
         <p>Select from the navigation to explore the cocktail database, ingredients, or use the custom search to find specific cocktails based on available ingredients.</p>
+
+        <!-- Authentication UI -->
+        <div id="auth-container">
+            <p id="user-info">Not signed in</p>
+            <button id="sign-in" onclick="signInWithGitHub()">Sign in with GitHub</button>
+            <button id="sign-out" onclick="signOut()" style="display: none;">Sign out</button>
+        </div>
     </div>
 
 </body>
